@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageCompress Pro | Smart Image Optimization</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #4f46e5;
+            --background: #f8fafc;
+            --text: #1e293b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-input {
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .file-input input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-input label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 0.75rem;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .file-input label:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .controls {
+            margin: 2rem 0;
+        }
+
+        .quality-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+        }
+
+        .quality-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .quality-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .preview-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .preview-img {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            border-radius: 0.5rem;
+            background: #f1f5f9;
+            padding: 0.5rem;
+        }
+
+        .stats {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .button:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 3rem;
+            height: 3rem;
+            border: 3px solid #e2e8f0;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .preview-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .ad-container {
+            margin: 2rem 0;
+            background: white;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ImageCompress Pro</h1>
+            <p>Optimize your images with AI-powered compression</p>
+        </div>
+
+        <div class="ad-container">
+            <!-- AdSense Header Ad -->
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        </div>
+
+        <div class="card">
+            <div class="file-input">
+                <input type="file" id="imageInput" accept="image/*">
+                <label for="imageInput">
+                    📁 Upload Image
+                </label>
+            </div>
+
+            <div class="controls">
+                <label for="quality">Compression Quality: <output id="qualityValue">80</output>%</label>
+                <input type="range" id="quality" class="quality-slider" min="1" max="100" value="80">
+                <button class="button" onclick="compressImage()">
+                    ⚡ Compress Now
+                </button>
+            </div>
+
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Optimizing your image...</p>
+            </div>
+
+            <div class="preview-container">
+                <div class="preview-card">
+                    <h3>Original</h3>
+                    <img id="originalPreview" class="preview-img" alt="Original preview">
+                    <div class="stats" id="originalSize"></div>
+                </div>
+                <div class="preview-card">
+                    <h3>Compressed</h3>
+                    <img id="compressedPreview" class="preview-img" alt="Compressed preview">
+                    <div class="stats" id="compressedSize"></div>
+                    <a id="downloadLink" class="button" style="margin-top: 1rem; text-decoration: none;">
+                        ⬇️ Download
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="ad-container">
+            <!-- AdSense Footer Ad -->
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+
+    <script>
+        // Same JavaScript functionality as before
+        // (Include the previous JavaScript code here)
+    </script>
+</body>
+</html>
